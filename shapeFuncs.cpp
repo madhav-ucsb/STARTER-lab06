@@ -2,7 +2,7 @@
 #include <string>
 #include <sstream>  // for ostringstream
 #include <iomanip> // for setprecision
-
+#include<math.h>
 using namespace std;
 
 
@@ -13,7 +13,11 @@ using namespace std;
 // Compute distance between two points
 
 double distanceBetween(Point p, Point q) {
-  return 99999.9; // @@@ STUB
+  double dx =  p.x -  q.x;
+  double dy = q.y - p.y;
+  double d2 = dx*dx + dy*dy;
+  double d = sqrt(d2);
+  return d; // @@@ STUB
   // HINTS: The distance formula is something you hopefully remember
   //   from H.S. algebra, but if not, Wikipedia is your friend.
   //   The sqrt function is available when you use #include <cmath>, 
@@ -34,7 +38,8 @@ double distanceBetween(Point p, Point q) {
 
 
 void initPoint(struct Point *p, double xVal, double yVal) {
-  //return; //@@@ for a void function, the stub is just a bare return that does nothing
+  p->x = xVal;
+  p->y = yVal;//return; //@@@ for a void function, the stub is just a bare return that does nothing
 }
 
 
@@ -48,8 +53,11 @@ string pointToString(Point p, int precision) {
 string boxToString(Box b, int precision) {
   
   // SAMPLE FORMAT: "ul=(3.4,-5),w=5,h=7"
+  ostringstream oss;
+  oss<<setprecision(precision);
+  oss<<"ul=("<<b.ul.x<<","<<b.ul.y<<"),w="<<b.width<<",h="<<b.height;
   
-  return "stub!"; // TODO: Delete this line and comment and replace with appropriate code
+  return oss.str(); // TODO: Delete this line and comment and replace with appropriate code
 }
  
 
@@ -81,6 +89,11 @@ bool boxesApproxEqual(Box b1, Box b2, double tolerance) {
 
   // TODO: FILL THIS IN WITH APPROPRIATE CODE
 
+  if(pointsApproxEqual(b1.ul, b2.ul,tolerance)&&(fabs(b1.width - b2.width)<tolerance) &&(fabs(b1.height - b2.height)<tolerance))
+  {
+    return true;
+  }
+
   return false; // STUB!  TODO: Delete this line and comment and replace with appropriate code
 }
 
@@ -96,11 +109,16 @@ bool boxesApproxEqual(Box b1, Box b2, double tolerance) {
 
 void initBox(struct Box *b, double ulx, double uly, double w, double h)
 {
+  b->ul.x = ulx;
+  b->ul.y = uly;
+  b->width = w;
+  b->height = h;
   return; // @@@ For a void function a "naked return" is a "do nothing" stub
 }
 
 
 double areaOfBox(Box b) {
-  return -42.0;  /* stub---make sure all tests fail initially */
+  double area = b.width*b.height;
+  return area;  /* stub---make sure all tests fail initially */
   // you can use b.width to access width, and b.height to access height
 }
